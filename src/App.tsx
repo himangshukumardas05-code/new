@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Leaf, Award, MapPin, TrendingUp, Users, Battery, Zap, Car, Menu, X } from 'lucide-react';
+import LoginPage from './components/LoginPage';
 
 interface CarbonEntry {
   id: string;
@@ -30,6 +31,7 @@ interface EWasteLocation {
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [totalPoints, setTotalPoints] = useState(1250);
   const [carbonEntries, setCarbonEntries] = useState<CarbonEntry[]>([
     { id: '1', date: '2025-01-17', transport: 12, electricity: 8, total: 20 },
@@ -115,6 +117,11 @@ function App() {
     { name: 'Green Warrior', description: 'Earned 1000+ EcoPoints', earned: totalPoints >= 1000, icon: '⚔️' },
     { name: 'E-Waste Hero', description: 'Reported 3+ e-waste locations', earned: ewasteLocations.length >= 2, icon: '♻️' }
   ];
+
+  // Show login page if not logged in
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={() => setIsLoggedIn(true)} />;
+  }
 
   const tabs = [
     { id: 'dashboard', name: 'Dashboard', icon: TrendingUp },
